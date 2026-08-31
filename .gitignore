@@ -1,0 +1,21 @@
+# Mac
+.DS_Store
+
+# IntelliJ
+.idea/
+
+# Environment files
+.env
+.env.*
+backend/nextstep/src/main/resources/application.yml 
+
+# Frontend
+frontend/.next/
+frontend/node_modules/
+
+# Backend
+backend/nextstep/target/
+backend/nextstep/uploads/
+
+# Logs
+*.log

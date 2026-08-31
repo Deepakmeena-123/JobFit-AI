@@ -1,0 +1,28 @@
+[build]
+  command = "npm run build"
+  publish = ".next"          # change to "build" if using CRA
+
+# -----------------------
+# 🔥 Fix Google OAuth Issues (Remove COOP/COEP)
+# -----------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "unsafe-none"
+    Cross-Origin-Embedder-Policy = "unsafe-none"
+
+# -----------------------
+# ⚡ Redirect API calls to serverless functions (Optional)
+# -----------------------
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+
+# -----------------------
+# 🧪 Serverless function settings (Optional)
+# -----------------------
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
