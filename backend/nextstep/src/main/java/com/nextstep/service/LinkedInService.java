@@ -29,13 +29,13 @@ public class LinkedInService {
                     .build();
 
             Map<String, Object> requestBody = Map.of(
-                    "username", linkedinUrl,   // pass the LinkedIn profile URL here
+                    "username", linkedinUrl,
                     "includeEmail", false
             );
 
-
             List<Map<String, Object>> response = webClient.post()
-                    .uri("/acts/apimaestro~linkedin-profile-detail/run-sync-get-dataset-items?token=" + apifyToken)
+                    .uri("/v2/actors/apimaestro~linkedin-profile-detail/run-sync-get-dataset-items")
+                    .headers(headers -> headers.setBearerAuth(apifyToken))
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(List.class)
@@ -46,10 +46,16 @@ public class LinkedInService {
                 return response.get(0);
             }
 
-            throw new RuntimeException("No data returned from LinkedIn scraper");
+            throw new RuntimeException(
+                    "No data returned from LinkedIn scraper"
+            );
+
         } catch (Exception e) {
             log.error("Error fetching LinkedIn profile", e);
-            throw new RuntimeException("Failed to fetch LinkedIn profile: " + e.getMessage());
+
+            throw new RuntimeException(
+                    "Failed to fetch LinkedIn profile: " + e.getMessage()
+            );
         }
     }
 }
